@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>POLINOTIUM</title>
-  <!-- Agregá esta línea acá abajo: -->
   <link rel="icon" type="image/png" href="logo.png">
   <style>
     /* Estilos generales */
@@ -300,7 +299,7 @@
       max-width: 540px;
       text-align: left;
     }
-  </>
+  </style>
 </head>
 <body>
 
@@ -442,13 +441,11 @@
     let currentSection = 'hub';
 
     function navigateTo(sectionId) {
-      // Validar si intenta ir a la sección donde ya está
       if (sectionId === currentSection) {
         showRedToast("Puede no parecerlo, ¡Pero ya estás ahí!");
         return;
       }
 
-      // Cambiar de sección
       const targetSec = document.getElementById('sec-' + sectionId);
       if (targetSec) {
         document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
@@ -458,7 +455,6 @@
       }
     }
 
-    // Manejo del botón Contacto
     function handleContactoClick() {
       if (currentSection === 'contacto') {
         showRedToast("Puede no parecerlo, ¡Pero ya estás ahí!");
@@ -467,12 +463,10 @@
       }
     }
 
-    // Copia al portapapeles y despliega cuadro negro por 3 segundos
     function copyEmailToClipboard(emailText) {
       navigator.clipboard.writeText(emailText).then(() => {
         showBlackToast("Gmail copiado al portapapeles");
       }).catch(err => {
-        // Fallback por si la API de portapapeles no está disponible
         const textArea = document.createElement("textarea");
         textArea.value = emailText;
         document.body.appendChild(textArea);
@@ -497,7 +491,6 @@
       }, 100);
     }
 
-    // Cartel rojo de aviso
     function showRedToast(message) {
       const container = document.getElementById('toast-container');
       const toast = document.createElement('div');
@@ -510,7 +503,6 @@
       }, 3200);
     }
 
-    // Cuadrado negro de confirmación de portapapeles
     function showBlackToast(message) {
       const container = document.getElementById('toast-container');
       const toast = document.createElement('div');
