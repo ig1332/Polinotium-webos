@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>POLINOTIUM</title>
+  <style>
+    /* Estilos generales */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #0b0b12;
+      color: #ffffff;
+      font-family: 'Georgia', 'Times New Roman', serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* Barra superior negra fija */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 70px;
+      background-color: #000000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    }
+
+    .header-logo {
+      height: 48px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+    }
+
+    .header-logo img {
+      height: 100%;
+      width: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 0 8px rgba(138, 180, 248, 0.6));
+    }
+
+    nav {
+      display: flex;
+      gap: 18px;
+      align-items: center;
+      overflow-x: auto;
+    }
+
+    nav button {
+      background: none;
+      border: none;
+      color: #ffffff;
+      font-family: inherit;
+      font-size: 1.05rem;
+      cursor: pointer;
+      padding: 5px 8px;
+      white-space: nowrap;
+      transition: opacity 0.2s, color 0.2s;
+    }
+
+    nav button:hover {
+      opacity: 0.8;
+      color: #a5c2f5;
+    }
+
+    /* Contenedor de avisos/toasts */
+    #toast-container {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2000;
+      pointer-events: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* Cartel Rojo para avisos de navegación */
+    .toast-red {
+      background-color: rgba(200, 0, 0, 0.95);
+      color: #ffffff;
+      padding: 12px 24px;
+      border-radius: 6px;
+      font-weight: bold;
+      font-size: 0.95rem;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+      text-align: center;
+      animation: fadeInOut 3.2s forwards;
+    }
+
+    /* Cuadrado Negro para copia al portapapeles */
+    .toast-black {
+      background-color: #000000;
+      color: #ffffff;
+      border: 1px solid #333333;
+      padding: 14px 28px;
+      border-radius: 8px;
+      font-weight: normal;
+      font-size: 1rem;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.8);
+      text-align: center;
+      animation: fadeInOut 3s forwards;
+    }
+
+    @keyframes fadeInOut {
+      0% { opacity: 0; transform: translateY(10px); }
+      15% { opacity: 1; transform: translateY(0); }
+      85% { opacity: 1; transform: translateY(0); }
+      100% { opacity: 0; transform: translateY(-10px); }
+    }
+
+    /* Contenido de Secciones */
+    main {
+      margin-top: 70px;
+      width: 100%;
+      max-width: 650px;
+      padding: 30px 20px 80px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .section {
+      display: none;
+      width: 100%;
+      flex-direction: column;
+      align-items: center;
+      animation: fadeIn 0.4s ease;
+    }
+
+    .section.active {
+      display: flex;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* HUB / Sección Principal */
+    .hub-logo {
+      width: 220px;
+      height: 220px;
+      margin: 20px 0 10px 0;
+      object-fit: contain;
+      filter: drop-shadow(0 0 15px rgba(138, 180, 248, 0.5));
+    }
+
+    .hub-title {
+      font-size: 2.2rem;
+      letter-spacing: 2px;
+      margin-bottom: 5px;
+      text-transform: uppercase;
+    }
+
+    .hub-subtitle {
+      font-style: italic;
+      font-size: 1rem;
+      color: #cccccc;
+      margin-bottom: 35px;
+    }
+
+    .hub-links {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      width: 100%;
+      max-width: 320px;
+    }
+
+    .hub-links button {
+      background: none;
+      border: none;
+      color: #ffffff;
+      font-family: inherit;
+      font-size: 1.25rem;
+      letter-spacing: 2px;
+      cursor: pointer;
+      padding: 8px;
+      text-transform: uppercase;
+      transition: transform 0.2s, color 0.2s;
+    }
+
+    .hub-links button:hover {
+      transform: scale(1.05);
+      color: #a5c2f5;
+    }
+
+    /* Títulos e Imágenes de Sección */
+    .section-title {
+      font-size: 2rem;
+      letter-spacing: 3px;
+      margin-bottom: 25px;
+      text-transform: uppercase;
+    }
+
+    .section-img {
+      max-width: 260px;
+      width: 80%;
+      height: auto;
+      margin-bottom: 25px;
+      object-fit: contain;
+    }
+
+    /* Textos y Párrafos */
+    .text-block {
+      line-height: 1.6;
+      font-size: 1.05rem;
+      margin-bottom: 20px;
+      color: #ececec;
+      max-width: 540px;
+      text-align: center;
+    }
+
+    .text-block p {
+      margin-bottom: 16px;
+    }
+
+    /* Links e Instagrams cliqueables */
+    .clickable-email, .social-handle {
+      cursor: pointer;
+      color: #ffffff;
+      text-decoration: underline;
+      transition: color 0.2s;
+    }
+
+    .clickable-email:hover, .social-handle:hover {
+      color: #a5c2f5;
+    }
+
+    /* Links en Sobre Mí */
+    .project-links-list {
+      list-style: none;
+      margin-top: 15px;
+    }
+
+    .project-links-list li {
+      margin: 8px 0;
+    }
+
+    .project-links-list button {
+      background: none;
+      border: none;
+      color: #ffffff;
+      font-family: inherit;
+      font-size: 1.05rem;
+      cursor: pointer;
+      text-decoration: underline;
+      transition: color 0.2s;
+    }
+
+    .project-links-list button:hover {
+      color: #a5c2f5;
+    }
+
+    /* Tarjetas de Proyecto */
+    .project-card {
+      text-align: left;
+      width: 100%;
+      max-width: 540px;
+      margin-bottom: 30px;
+    }
+
+    .project-card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 8px;
+      color: #ffffff;
+    }
+
+    .project-card p {
+      line-height: 1.5;
+      color: #dddddd;
+      font-size: 1rem;
+    }
+
+    .section-subtitle {
+      font-size: 1.4rem;
+      margin: 30px 0 20px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+      padding-bottom: 5px;
+      width: 100%;
+      max-width: 540px;
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Barra de navegación fija -->
+  <header>
+    <div class="header-logo" onclick="navigateTo('hub')">
+      <img src="logo.png" alt="POLINOTIUM Logo">
+    </div>
+    <nav>
+      <button onclick="navigateTo('proyectos')">Proyectos</button>
+      <button onclick="navigateTo('sobre-mi')">Sobre Mí</button>
+      <button onclick="navigateTo('newsletter')">Newsletter</button>
+      <button onclick="handleContactoClick()">Contacto</button>
+      <button onclick="navigateTo('links')">Links</button>
+    </nav>
+  </header>
+
+  <!-- Contenedor para mensajes emergentes -->
+  <div id="toast-container"></div>
+
+  <!-- Contenido principal -->
+  <main>
+
+    <!-- SECCIÓN HUB (Pantalla al entrar) -->
+    <section id="sec-hub" class="section active">
+      <img src="logo.png" alt="POLINOTIUM Logo Grande" class="hub-logo">
+      <h1 class="hub-title">POLINOTIUM</h1>
+      <p class="hub-subtitle">"keep keeping that in your mind.. It'll be worse."</p>
+      
+      <div class="hub-links">
+        <button onclick="navigateTo('proyectos')">PROYECTOS</button>
+        <button onclick="navigateTo('sobre-mi')">SOBRE MI</button>
+        <button onclick="navigateTo('newsletter')">NEWSLETTER</button>
+        <button onclick="handleContactoClick()">CONTACTO</button>
+        <button onclick="navigateTo('links')">LINKS</button>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 0: NEWSLETTER -->
+    <section id="sec-newsletter" class="section">
+      <h2 class="section-title">NEWSLETTER Y AVANCES</h2>
+      <img src="newsletter.png" alt="Icono Newsletter" class="section-img">
+      <div class="text-block">
+        <p>Próximamente vas a ver acá todas las novedades y actualizaciones del proyecto.</p>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 1: SOBRE MÍ -->
+    <section id="sec-sobre-mi" class="section">
+      <h2 class="section-title">SOBRE MI</h2>
+      <img src="sobre-mi.png" alt="Avatar Iara" class="section-img">
+      
+      <div class="text-block">
+        <p><strong>¡Hola!</strong></p>
+        <p>Soy Iara, una chica de 13 años en Buenos Aires, Argentina que busca vivir de la música. Mientras consigo lo que necesito para eso, estoy metida en otros proyectos. Desde chiquita me interesé en el arte; no arte de dibujo, sino arte en general.</p>
+        <p>Lo que creo que marca una línea divisoria entre yo y otros proyectos indie del estilo es que me gusta todo. Por eso, hay distintas formas de arte aquí.</p>
+        <p>Mira mis proyectos aquí abajo (son links) o en la cabecera ahí arriba.</p>
+        
+        <ul class="project-links-list">
+          <li><button onclick="goToProject('satan-biggest-fear')">Satan Biggest Fear</button></li>
+          <li><button onclick="goToProject('lo-que-queda')">Lo Que Queda De Nosotros</button></li>
+          <li><button onclick="goToProject('aero-friendz')">Aero Friendz</button></li>
+          <li><button onclick="goToProject('sweet-cyanide')">Sweet Cyanide</button></li>
+          <li><button onclick="goToProject('pais-sin-costa')">País Sin Costa</button></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 2: PROYECTOS -->
+    <section id="sec-proyectos" class="section">
+      <h2 class="section-title">PROYECTOS</h2>
+      <img src="proyectos.png" alt="Ilustración Proyectos" class="section-img">
+
+      <div class="text-block">
+        <p><em>¿Vieron mi logo ahí arriba en la cabecera? Tiene 5 astas, que simbolizan mis 5 proyectos principales.</em></p>
+      </div>
+
+      <!-- Proyectos Principales -->
+      <div id="lo-que-queda" class="project-card">
+        <h3>Lo Que Queda De Nosotros:</h3>
+        <p>Un libro que narra la historia de Avi, un adolescente de 16 años que vive su vida normal en su país, Atheria. Un día, empieza a ver formas de colores que solo él mismo puede ver y/o oír.</p>
+      </div>
+
+      <div id="aero-friendz" class="project-card">
+        <h3>Aero Friendz:</h3>
+        <p>Una serie con protagonistas basados en objetos que, en realidad, son solo proyecciones de gente real. La historia sigue a Aove, un preadolescente que sufre de desamor, síndrome de paloma (migajero), y problemas en casa.</p>
+      </div>
+
+      <div id="pais-sin-costa" class="project-card">
+        <h3>País Sin Costa:</h3>
+        <p>Una obra conceptual dividida en canciones que forman parte de actos. Muestra a Tomás (quien es la persona cuya sombra en AF es Aove) enamorado de Olivia (Que también tiene su proyección en Aero Friendz) y teniendo los problemas de Aove, pero vistos desde una perspectiva más madura, seria y melancólica.</p>
+      </div>
+
+      <div id="satan-biggest-fear" class="project-card">
+        <h3>Satan Biggest Fear:</h3>
+        <p>Un videojuego que narra la vida de Beliel, un demonio que vive su vida siguiendo los planes de satán. En su mundo, el ateísmo creció a tal punto que Dios enfermó. Satán no le daba importancia (👀), Pero cuando eso pasó, decidió tomar cartas en el asunto. Tu objetivo es seguir su plan, mientras conoces más y más de la vida de tres chicos que viven en el alejado pueblo de San Sebastián que te tocó para estar.</p>
+      </div>
+
+      <!-- Proyectos Colaborativos -->
+      <h3 class="section-subtitle">Proyectos Colaborativos:</h3>
+
+      <div id="sweet-cyanide" class="project-card">
+        <h3>Sweet Cyanide:</h3>
+        <p>Un webcomic en colaboración con mi mejor amiga Gobblethecube. El comic muestra la vida de Iván y Devin, una pareja de chicos que viven su vida en la secundaria sin nada raro... seh.</p>
+      </div>
+
+      <div id="spooky-target" class="project-card">
+        <h3>Spooky Target:</h3>
+        <p>Un caótico juego de peleas basado en el universo de Deltarune, de Toby Fox. Alguien creó un mundo oscuro dentro de la escuela, el cual escapó y logró consumir a todo el establecimiento. Quienes pudieron escapar, fueron silenciados por algo más. Quienes no pudieron escapar, hoy son espectadores de los macabros juegos que se desarrollan dentro del mundo.</p>
+      </div>
+    </section>
+
+    <!-- SECCIÓN LINKS -->
+    <section id="sec-links" class="section">
+      <h2 class="section-title">LINKS</h2>
+      <div class="text-block" style="margin-top: 30px;">
+        <p style="font-size: 1.25rem; margin-bottom: 25px;">Mis redes sociales:</p>
+        
+        <p style="margin-bottom: 12px; font-size: 1.1rem; line-height: 1.6;">
+          Instagram 
+          <a href="https://instagram.com/polinotium" target="_blank" class="social-handle">@polinotium</a>, 
+          <a href="https://instagram.com/avisongwriter" target="_blank" class="social-handle">@avisongwriter</a><br>
+          <span style="font-size: 0.95rem; color: #bbbbbb;">(tengo uno exclusivo para la música)</span>
+        </p>
+
+        <p style="margin-top: 35px; margin-bottom: 20px;">
+          Voy a solucionar un problema respecto a TikTok, ya saben cómo es.
+        </p>
+
+        <p style="font-style: italic; color: #aaaaaa;">
+          próximamente lo abro.
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    let currentSection = 'hub';
+
+    function navigateTo(sectionId) {
+      // Validar si intenta ir a la sección donde ya está
+      if (sectionId === currentSection) {
+        showRedToast("Puede no parecerlo, ¡Pero ya estás ahí!");
+        return;
+      }
+
+      // Cambiar de sección
+      const targetSec = document.getElementById('sec-' + sectionId);
+      if (targetSec) {
+        document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
+        targetSec.classList.add('active');
+        currentSection = sectionId;
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
+
+    // Manejo del botón Contacto
+    function handleContactoClick() {
+      if (currentSection === 'contacto') {
+        showRedToast("Puede no parecerlo, ¡Pero ya estás ahí!");
+      } else {
+        copyEmailToClipboard('igmiraesto@gmail.com');
+      }
+    }
+
+    // Copia al portapapeles y despliega cuadro negro por 3 segundos
+    function copyEmailToClipboard(emailText) {
+      navigator.clipboard.writeText(emailText).then(() => {
+        showBlackToast("Gmail copiado al portapapeles");
+      }).catch(err => {
+        // Fallback por si la API de portapapeles no está disponible
+        const textArea = document.createElement("textarea");
+        textArea.value = emailText;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textArea);
+        showBlackToast("Gmail copiado al portapapeles");
+      });
+    }
+
+    function goToProject(projectId) {
+      document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
+      const projSec = document.getElementById('sec-proyectos');
+      projSec.classList.add('active');
+      currentSection = 'proyectos';
+
+      setTimeout(() => {
+        const projEl = document.getElementById(projectId);
+        if (projEl) {
+          projEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }, 100);
+    }
+
+    // Cartel rojo de aviso
+    function showRedToast(message) {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = 'toast-red';
+      toast.innerText = message;
+      container.appendChild(toast);
+
+      setTimeout(() => {
+        toast.remove();
+      }, 3200);
+    }
+
+    // Cuadrado negro de confirmación de portapapeles
+    function showBlackToast(message) {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = 'toast-black';
+      toast.innerText = message;
+      container.appendChild(toast);
+
+      setTimeout(() => {
+        toast.remove();
+      }, 3000);
+    }
+  </script>
+</body>
+</html>
