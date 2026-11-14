@@ -233,6 +233,64 @@
       margin-bottom: 16px;
     }
 
+    /* Estilo de Publicación / Devlog para Newsletter */
+    .devlog-post {
+      background-color: rgba(25, 25, 38, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      padding: 25px 20px;
+      margin-top: 10px;
+      width: 100%;
+      max-width: 540px;
+      text-align: left;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    }
+
+    .devlog-post h3 {
+      font-size: 1.35rem;
+      color: #a5c2f5;
+      margin-bottom: 15px;
+      border-bottom: 1px solid rgba(255,255,255,0.15);
+      padding-bottom: 8px;
+    }
+
+    .devlog-project {
+      margin-bottom: 25px;
+    }
+
+    .devlog-project h4 {
+      font-size: 1.15rem;
+      color: #ffffff;
+      margin-bottom: 4px;
+    }
+
+    .devlog-percentage {
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: #8ab4f8;
+      margin-bottom: 10px;
+    }
+
+    .devlog-list-title {
+      font-size: 0.95rem;
+      color: #bbbbbb;
+      margin-top: 8px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .devlog-post ul {
+      list-style-type: disc;
+      margin-left: 20px;
+      color: #dddddd;
+      font-size: 0.98rem;
+      margin-bottom: 8px;
+    }
+
+    .devlog-post li {
+      margin: 3px 0;
+    }
+
     /* Links e Instagrams cliqueables */
     .clickable-email, .social-handle {
       cursor: pointer;
@@ -301,6 +359,7 @@
     }
   </style>
 </head>
+
 <body>
 
   <!-- Barra de navegación fija -->
@@ -342,8 +401,111 @@
     <section id="sec-newsletter" class="section">
       <h2 class="section-title">NEWSLETTER Y AVANCES</h2>
       <img src="newsletter.png" alt="Icono Newsletter" class="section-img">
-      <div class="text-block">
-        <p>Próximamente vas a ver acá todas las novedades y actualizaciones del proyecto.</p>
+      
+      <!-- Publicación del Devlog -->
+      <div class="devlog-post">
+        <h3>Primer Devlog; porcentajes</h3>
+        
+        <div class="text-block" style="text-align: left; margin-bottom: 20px;">
+          <p>¡Hola!</p>
+          <p>Bienvenidos al primer devlog.</p>
+          <p>En este… simplemente voy a dar los porcentajes de cuánto va de completo cada proyecto.</p>
+        </div>
+
+        <!-- Lo Que Queda De Nosotros -->
+        <div class="devlog-project">
+          <h4>Lo Que Queda De Nosotros</h4>
+          <div class="devlog-percentage">50%</div>
+          <div class="devlog-list-title">Hecho:</div>
+          <ul>
+            <li>Historia</li>
+            <li>Personajes</li>
+            <li>Final</li>
+            <li>Texto</li>
+          </ul>
+          <div class="devlog-list-title">Falta por hacer:</div>
+          <ul>
+            <li>Arte</li>
+            <li>Formato libro</li>
+            <li>Encontrar una editorial</li>
+            <li>Librerías!</li>
+          </ul>
+        </div>
+
+        <!-- Aero Friendz -->
+        <div class="devlog-project">
+          <h4>Aero Friendz</h4>
+          <div class="devlog-percentage">40%</div>
+          <div class="devlog-list-title">Hecho:</div>
+          <ul>
+            <li>Personajes</li>
+            <li>Historia</li>
+            <li>Guión</li>
+          </ul>
+          <div class="devlog-list-title">Falta por hacer:</div>
+          <ul>
+            <li>Doblaje</li>
+            <li>Animación</li>
+            <li>Miniaturas</li>
+          </ul>
+        </div>
+
+        <!-- País Sin Costa -->
+        <div class="devlog-project">
+          <h4>País Sin Costa</h4>
+          <div class="devlog-percentage">28%</div>
+          <div class="devlog-list-title">Hecho:</div>
+          <ul>
+            <li>Historia</li>
+            <li>Final</li>
+            <li>Letra</li>
+            <li>Más o menos la idea del resultado</li>
+          </ul>
+          <div class="devlog-list-title">Falta por hacer:</div>
+          <ul>
+            <li>Composición</li>
+            <li>Vocalización</li>
+            <li>Práctica</li>
+          </ul>
+        </div>
+
+        <!-- Satan's Greatest Fear -->
+        <div class="devlog-project">
+          <h4>Satan’s Greatest Fear</h4>
+          <div class="devlog-percentage">1%</div>
+          <div class="devlog-list-title">Hecho:</div>
+          <ul>
+            <li>Historia</li>
+            <li>Desarrollo</li>
+            <li>Final</li>
+            <li>Personajes</li>
+            <li>Sistema de movimiento</li>
+            <li>Sistema de diálogos</li>
+            <li>Sistema de batalla (En progreso)</li>
+          </ul>
+          <div class="devlog-list-title">Falta por hacer:</div>
+          <ul>
+            <li>Todo. (No voy a nombrar todo)</li>
+          </ul>
+        </div>
+
+        <!-- Demás proyectos -->
+        <div class="devlog-project" style="margin-bottom: 5px;">
+          <h4>Demás proyectos</h4>
+          <p style="color: #dddddd; font-size: 0.98rem; margin-top: 8px; line-height: 1.5;">
+            Decidí juntar todos los proyectos restantes porque no vale la pena nombrar cosa por cosa.. y tampoco vale la pena poner porcentajes. (%)
+          </p>
+          <p style="color: #dddddd; font-size: 0.98rem; margin-top: 10px; line-height: 1.5;">
+            En <strong>Swwet Cyanide</strong> tenemos hechos los conceptos de los personajes.. y una idea de la historia.
+          </p>
+          <p style="color: #dddddd; font-size: 0.98rem; margin-top: 10px; line-height: 1.5;">
+            Por parte de Pepe y <strong>Spooky Target</strong> sabemos la historia y algunos personajes.
+          </p>
+          <p style="color: #dddddd; font-size: 0.98rem; margin-top: 10px; line-height: 1.5;">
+            <strong>Los Misioneros Del Día Del No</strong>.. hasta ahora se lo pregunté a Pepe y a Bloxsamu y ambos están de acuerdo. Pero sigue siendo algo lejano.
+          </p>
+        </div>
+
       </div>
     </section>
 
@@ -446,7 +608,7 @@
 
   </main>
 
-  <script>
+    <script>
     let currentSection = 'hub';
 
     function navigateTo(sectionId) {
@@ -486,7 +648,7 @@
       });
     }
 
-        function goToProject(projectId) {
+    function goToProject(projectId) {
       document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
       const projSec = document.getElementById('sec-proyectos');
       projSec.classList.add('active');
